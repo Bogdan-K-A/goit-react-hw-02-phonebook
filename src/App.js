@@ -21,10 +21,11 @@ class App extends Component {
     const { contacts } = this.state
     const reLockInput = contacts.find((contact) => contact.name === name)
 
-    /* ------------------------ условие запарета на повторный ввод ----------------------- */
+    /* ------------------------ условие запрета на повторный ввод ----------------------- */
     if (reLockInput) {
       alert('Такой контакт уже есть в списке')
     } else {
+      /* ------------------------ Добавляет контакт в список ----------------------- */
       const contact = {
         name,
         number,
