@@ -1,8 +1,8 @@
 import { Component } from 'react'
 import shortid from 'shortid'
-import Container from './components/container/Container'
+import { Container } from './components/container/Container'
 import { ContactList } from './components/ContactList/ContactList'
-import ContactForm from './components/ContactForm/ContactForm'
+import { ContactForm } from './components/ContactForm/ContactForm'
 import { ContactFilter } from './components/ContactFilter/ContactFilter'
 
 class App extends Component {
@@ -16,21 +16,37 @@ class App extends Component {
     filter: '',
   }
 
-  /* ---------------------- добавление контакта в список ---------------------- */
+  /* ---------------------- Добавление контакта в список ---------------------- */
   addContact = (name, number) => {
-    const contact = {
-      name,
-      number,
-      id: shortid.generate(),
+    const { contacts } = this.state
+    const reLockInput = contacts.find((contact) => contact.name === name)
+
+    /* ------------------------ условие запарета на повторный ввод ----------------------- */
+    if (reLockInput) {
+      alert('Такой контакт уже есть в списке')
+    } else {
+      const contact = {
+        name,
+        number,
+        id: shortid.generate(),
+      }
+      this.setState(({ contacts }) => ({
+        contacts: [contact, ...contacts],
+      }))
     }
+  }
+
+  /* ----------------------- Удаление контакта из списка ---------------------- */
+  contactDelete = (contactId) => {
     this.setState(({ contacts }) => ({
-      contacts: [contact, ...contacts],
+      contacts: contacts.filter((contact) => contact.id !== contactId),
     }))
   }
 
   /* ---------------------------- Фильтр контактов ---------------------------- */
   contactsFilter = (e) => {
-    this.setState({ filter: e.target.value })
+    const { value } = e.target
+    this.setState({ filter: value })
   }
 
   getVisibleContacts = () => {
@@ -52,7 +68,10 @@ class App extends Component {
         <h2>Contacts</h2>
 
         <ContactFilter value={filter} onChange={this.contactsFilter} />
-        <ContactList contacts={visibleContacts} />
+        <ContactList
+          contacts={visibleContacts}
+          onContactDelete={this.contactDelete}
+        />
       </Container>
     )
   }
