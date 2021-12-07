@@ -66,8 +66,8 @@ class App extends Component {
       <Container>
         <h1>Phoneboock</h1>
         <ContactForm onAddContact={this.addContact} />
-        <h2>Contacts</h2>
 
+        <h2>Contacts</h2>
         <ContactFilter value={filter} onChange={this.contactsFilter} />
         <ContactList
           contacts={visibleContacts}

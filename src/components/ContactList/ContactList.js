@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types'
-import s from './ContactList.module.css'
+import { ContactElem } from '../ContactElem/ContactElem'
+import s from '../ContactElem/ContactElem.module.css'
 
 export const ContactList = ({ contacts, onContactDelete }) => {
   return (
@@ -7,19 +8,13 @@ export const ContactList = ({ contacts, onContactDelete }) => {
       <ul>
         {contacts.map(({ id, name, number }) => (
           <li className={s.contactItem} key={id}>
-            <p>
-              {name}: {number}
-            </p>
-
-            <button
-              className={s.btnItem}
-              type="button"
-              onClick={() => {
+            <ContactElem
+              name={name}
+              number={number}
+              onContactDelete={() => {
                 onContactDelete(id)
               }}
-            >
-              Delete
-            </button>
+            />
           </li>
         ))}
       </ul>
