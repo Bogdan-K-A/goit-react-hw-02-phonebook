@@ -3,6 +3,10 @@ import PropTypes from 'prop-types'
 import s from './ContactForm.module.css'
 
 export class ContactForm extends Component {
+  static propTypes = {
+    onAddContact: PropTypes.func.isRequired,
+  }
+
   state = {
     name: '',
     number: '',
@@ -60,8 +64,4 @@ export class ContactForm extends Component {
       </form>
     )
   }
-}
-
-ContactForm.propTypes = {
-  onAddContact: PropTypes.func.isRequired,
 }
